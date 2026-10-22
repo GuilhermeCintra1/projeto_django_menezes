@@ -1,0 +1,13 @@
+{% extends "notes/base.html" %}
+
+{% block content %}
+<h1>Get-it</h1>
+
+<ul>
+  {% for note in notes %}
+  <li>{{ note.title }}</li>
+  {% empty %}
+  <li>Nenhuma anotação por enquanto.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
