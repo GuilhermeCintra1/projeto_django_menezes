@@ -1,0 +1,17 @@
+{% extends "notes/base.html" %}
+
+{% block content %}
+<h1>Cavalos de {{ cliente.nome }}</h1>
+<a href="{% url 'novo_cavalo' cliente.id %}">Cadastrar cavalo</a>
+<ul>
+  {% for cavalo in cavalos %}
+  <li>
+    {{ cavalo.nome }} - Idade: {{ cavalo.idade }} - Pai: {{ cavalo.pai }} - Mãe: {{ cavalo.mae }}
+    <a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a>
+    <a href="{% url 'apagar_cavalo' cavalo.id %}">Apagar</a>
+  </li>
+  {% empty %}
+  <li>Nenhum cavalo cadastrado para este proprietário.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

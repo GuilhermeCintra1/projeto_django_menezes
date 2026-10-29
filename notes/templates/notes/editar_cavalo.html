@@ -1,0 +1,36 @@
+{% extends "notes/base.html" %}
+
+{% block content %}
+<h1>Editar cavalo</h1>
+<form method="post">
+  {% csrf_token %}
+  <p>
+    <label for="proprietario">Proprietário</label>
+    <select id="proprietario" name="proprietario" required>
+      <option value="">Escolha o proprietário</option>
+      {% for cliente in clientes %}
+      <option value="{{ cliente.id }}" {% if cliente.id == cavalo.proprietario_id %}selected{% endif %}>{{ cliente.nome }}</option>
+      {% endfor %}
+    </select>
+  </p>
+  <p>
+    <label for="nome">Nome do cavalo</label>
+    <input id="nome" name="nome" type="text" maxlength="200" value="{{ cavalo.nome }}" required />
+  </p>
+  <p>
+    <label for="idade">Idade em anos</label>
+    <input id="idade" name="idade" type="text" maxlength="200" value="{{ cavalo.idade }}" required />
+  </p>
+  <p>
+    <label for="pai">Pai</label>
+    <input id="pai" name="pai" type="text" maxlength="200" value="{{ cavalo.pai }}" required />
+  </p>
+  <p>
+    <label for="mae">Mãe</label>
+    <input id="mae" name="mae" type="text" maxlength="200" value="{{ cavalo.mae }}" required />
+  </p>
+  <button type="submit">Salvar alterações</button>
+</form>
+<p><a href="{% url 'cavalos' %}">Voltar para cavalos</a></p>
+{% endblock %}
+

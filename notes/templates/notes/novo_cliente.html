@@ -1,0 +1,22 @@
+{% extends "notes/base.html" %}
+
+{% block content %}
+<h1>Cadastrar proprietário</h1>
+<form method="post">
+  {% csrf_token %}
+  <p>
+    <label for="nome">Nome</label>
+    <input id="nome" name="nome" type="text" maxlength="200" required />
+  </p>
+  <p>
+    <label for="telefone">Telefone</label>
+    <input id="telefone" name="telefone" type="tel" maxlength="30" required />
+  </p>
+  <p>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" maxlength="254" required />
+  </p>
+  <button type="submit">Cadastrar proprietário</button>
+</form>
+<p><a href="{% url 'index' %}">Voltar para proprietários</a></p>
+{% endblock %}

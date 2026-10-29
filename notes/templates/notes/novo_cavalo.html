@@ -1,0 +1,27 @@
+{% extends "notes/base.html" %}
+
+{% block content %}
+<h1>Cadastrar cavalo</h1>
+<p>Proprietário: <strong>{{ cliente.nome }}</strong></p>
+<form method="post">
+  {% csrf_token %}
+  <p>
+    <label for="nome">Nome do cavalo</label>
+    <input id="nome" name="nome" type="text" maxlength="200" required />
+  </p>
+  <p>
+    <label for="idade">Idade em anos</label>
+    <input id="idade" name="idade" type="text" maxlength="200" required />
+  </p>
+  <p>
+    <label for="pai">Pai</label>
+    <input id="pai" name="pai" type="text" maxlength="200" required />
+  </p>
+  <p>
+    <label for="mae">Mãe</label>
+    <input id="mae" name="mae" type="text" maxlength="200" required />
+  </p>
+  <button type="submit">Cadastrar cavalo</button>
+</form>
+<p><a href="{% url 'cavalos_cliente' cliente.id %}">Voltar para cavalos de {{ cliente.nome }}</a></p>
+{% endblock %}

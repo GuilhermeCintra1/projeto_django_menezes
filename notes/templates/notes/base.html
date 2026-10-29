@@ -2,10 +2,11 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Cadastro de cavalos e clientes</title>
+    <title>Proprietários e cavalos</title>
   </head>
-
   <body>
+    <a href="{% url 'index' %}">Proprietários</a>
+    <a href="{% url 'cavalos' %}">Cavalos</a>
     {% block content %} {% endblock %}
   </body>
 </html>

@@ -1,44 +1,22 @@
 {% extends "notes/base.html" %}
 
 {% block content %}
-<h1>Cadastro de cavalos</h1>
-<p><a href="{% url 'index' %}">Cadastro de clientes</a></p>
-
-<form method="post" action="{% url 'cavalos' %}">
-  {% csrf_token %}
-  <p>
-    <label for="nome">Nome</label>
-    <input id="nome" name="nome" type="text" maxlength="200" required />
-  </p>
-  <p>
-    <label for="idade">Idade em anos</label>
-    <input id="idade" name="idade" type="number" min="0" step="1" required />
-  </p>
-  <p>
-    <label for="pai">Pai</label>
-    <input id="pai" name="pai" type="text" maxlength="200" required />
-  </p>
-  <p>
-    <label for="mae">Mãe</label>
-    <input id="mae" name="mae" type="text" maxlength="200" required />
-  </p>
-  <p>
-    <label for="proprietario">Proprietário</label>
-    <input id="proprietario" name="proprietario" type="text" maxlength="200" required />
-  </p>
-  <button type="submit">Cadastrar cavalo</button>
-</form>
-
-<h2>Cavalos cadastrados</h2>
+<h1>Cavalos</h1>
+<p>Para cadastrar um cavalo, escolha um proprietário na página de proprietários.</p>
 <ul>
   {% for cavalo in cavalos %}
   <li>
-    <strong>{{ cavalo.nome }}</strong> — Idade: {{ cavalo.idade }} ano(s);
-    Pai: {{ cavalo.pai }}; Mãe: {{ cavalo.mae }};
-    Proprietário: {{ cavalo.proprietario }}.
+    {{ cavalo.nome }} - Idade: {{ cavalo.idade }} - Pai: {{ cavalo.pai }} - Mãe: {{ cavalo.mae }}
+    {% if cavalo.proprietario %}
+    - Proprietário: {{ cavalo.proprietario.nome }}
+    {% else %}
+    - Escolha o proprietário em Editar.
+    {% endif %}
+    <a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a>
+    <a href="{% url 'apagar_cavalo' cavalo.id %}">Apagar</a>
   </li>
   {% empty %}
-  <li>Nenhum cavalo cadastrado por enquanto.</li>
+  <li>Nenhum cavalo cadastrado.</li>
   {% endfor %}
 </ul>
 {% endblock %}
