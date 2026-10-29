@@ -7,7 +7,7 @@
   {% for cavalo in cavalos %}
   <li>
     {{ cavalo.nome }} - Idade: {{ cavalo.idade }} - Pai: {{ cavalo.pai }} - Mãe: {{ cavalo.mae }}
-    <a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a>
+    - <a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a> -
     <a href="{% url 'apagar_cavalo' cavalo.id %}">Apagar</a>
   </li>
   {% empty %}
@@ -15,3 +15,4 @@
   {% endfor %}
 </ul>
 {% endblock %}
+

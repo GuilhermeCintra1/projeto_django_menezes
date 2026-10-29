@@ -12,7 +12,7 @@
     {% else %}
     - Escolha o proprietário em Editar.
     {% endif %}
-    <a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a>
+    - <a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a> -
     <a href="{% url 'apagar_cavalo' cavalo.id %}">Apagar</a>
   </li>
   {% empty %}
@@ -20,3 +20,4 @@
   {% endfor %}
 </ul>
 {% endblock %}
+
