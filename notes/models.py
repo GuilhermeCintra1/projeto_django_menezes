@@ -1,13 +1,26 @@
 from django.db import models
 
-class Note(models.Model):
-    title = models.CharField(max_length=200)
-    created_at = models.DateField(auto_now_add=True)
-    content = models.TextField()
+
+class Cavalo(models.Model):
+    nome = models.CharField(max_length=200)
+    idade = models.CharField('idade em anos', max_length=200)
+    pai = models.CharField(max_length=200)
+    mae = models.CharField('mãe', max_length=200)
+    proprietario = models.CharField('proprietário', max_length=200)
+
+    def __str__(self):
+        return self.nome
+
+class Cliente(models.Model):
+    nome = models.CharField(max_length=200)
+    telefone = models.CharField(max_length=30)
+    email = models.CharField(max_length=254)
   
 
 
     def __str__(self):
-        return f'{self.id}. {self.title}'
+        return self.nome
     
     
+
+
