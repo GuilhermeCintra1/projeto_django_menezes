@@ -18,6 +18,9 @@
   <li class="registro">
     <div class="registro-conteudo">
       <span class="etiqueta">Cavalo</span><h2>{{ cavalo.nome }}</h2>
+      {% if cavalo.foto %}
+      <img class="foto-cavalo" src="{{ cavalo.foto.url }}" alt="Foto de {{ cavalo.nome }}" width="360" loading="lazy" />
+      {% endif %}
       <div class="dados"><p><span>Idade</span>{{ cavalo.idade }} ano(s)</p><p><span>Pai</span>{{ cavalo.pai }}</p><p><span>Mãe</span>{{ cavalo.mae }}</p></div>
       {% if user.is_staff %}
       {% if cavalo.proprietario %}<p class="proprietario-animal">Proprietário: <a href="{% url 'cavalos_cliente' cavalo.proprietario_id %}">{{ cavalo.proprietario.nome }}</a></p>{% else %}<p class="proprietario-animal">Escolha o proprietário em Editar.</p>{% endif %}

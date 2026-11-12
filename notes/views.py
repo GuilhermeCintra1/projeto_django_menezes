@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from .models import Cavalo, Cliente
+from .forms import CavaloForm
 
 
 def criar_conta(request):
@@ -89,15 +90,15 @@ def novo_cavalo(request, cliente_id):
     if not request.user.is_staff and cliente.usuario != request.user:
         return redirect('index')
     if request.method == 'POST':
-        nome = request.POST.get('nome')
-        idade = request.POST.get('idade')
-        pai = request.POST.get('pai')
-        mae = request.POST.get('mae')
-        cavalo = Cavalo(nome=nome, idade=idade, pai=pai, mae=mae, proprietario=cliente)
-        cavalo.save()
-        return redirect('cavalos_cliente', cliente_id=cliente.id)
+        form = CavaloForm(request.POST, request.FILES)
+        if form.is_valid():
+            cavalo = form.save(commit=False)
+            cavalo.proprietario = cliente
+            cavalo.save()
+            return redirect('cavalos_cliente', cliente_id=cliente.id)
     else:
-        return render(request, 'notes/novo_cavalo.html', {'cliente': cliente})
+        form = CavaloForm()
+    return render(request, 'notes/novo_cavalo.html', {'cliente': cliente, 'form': form})
 
 
 @login_required
@@ -131,20 +132,20 @@ def editar_cavalo(request, cavalo_id):
             return redirect('cavalos')
     cavalo = Cavalo.objects.get(id=cavalo_id)
     if request.method == 'POST':
-        cavalo.nome = request.POST.get('nome')
-        cavalo.idade = request.POST.get('idade')
-        cavalo.pai = request.POST.get('pai')
-        cavalo.mae = request.POST.get('mae')
-        if request.user.is_staff:
-            cavalo.proprietario = Cliente.objects.get(id=request.POST.get('proprietario'))
-        cavalo.save()
-        return redirect('cavalos_cliente', cliente_id=cavalo.proprietario_id)
+        form = CavaloForm(request.POST, request.FILES, instance=cavalo)
+        if form.is_valid():
+            cavalo = form.save(commit=False)
+            if request.user.is_staff:
+                cavalo.proprietario = Cliente.objects.get(id=request.POST.get('proprietario'))
+            cavalo.save()
+            return redirect('cavalos_cliente', cliente_id=cavalo.proprietario_id)
     else:
-        if request.user.is_staff:
-            clientes = Cliente.objects.all().order_by('nome')
-        else:
-            clientes = Cliente.objects.filter(usuario=request.user)
-        return render(request, 'notes/editar_cavalo.html', {'cavalo': cavalo, 'clientes': clientes})
+        form = CavaloForm(instance=cavalo)
+    if request.user.is_staff:
+        clientes = Cliente.objects.all().order_by('nome')
+    else:
+        clientes = Cliente.objects.filter(usuario=request.user)
+    return render(request, 'notes/editar_cavalo.html', {'cavalo': cavalo, 'clientes': clientes, 'form': form})
 
 
 @login_required

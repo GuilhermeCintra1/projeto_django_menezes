@@ -47,6 +47,8 @@ p { margin-top: 0; }
 .etiqueta { display: inline-block; padding: 3px 9px; background: var(--verde-claro); border-radius: 4px; color: #3b5845; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: bold; }
 .registro h2 a { text-decoration: none; }
 .registro h2 a:hover { text-decoration: underline; }
+.foto-cavalo { display: block; width: 100%; max-width: 360px; max-height: 260px; object-fit: contain; border-radius: 6px; margin: 16px 0; background: var(--verde-claro); }
+.formulario a { overflow-wrap: anywhere; }
 .dados { display: flex; flex-wrap: wrap; gap: 20px 52px; }
 .dados p { margin: 0; overflow-wrap: anywhere; min-width: 80px; }
 .dados span { display: block; font-size: 11px; letter-spacing: .04em; color: var(--cinza); margin-bottom: 3px; }

@@ -2,6 +2,7 @@ from django.db import models
 
 class Cavalo(models.Model):
     nome = models.CharField(max_length=200)
+    foto = models.ImageField(upload_to='cavalos/', blank=True)
     idade = models.CharField('idade em anos', max_length=200)
     pai = models.CharField(max_length=200)
     mae = models.CharField('mãe', max_length=200)
