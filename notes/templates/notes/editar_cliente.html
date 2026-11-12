@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Editar proprietário</h1>
-<form method="post" action="{% url 'editar_cliente' cliente.id %}">
+<form class="formulario" method="post" action="{% url 'editar_cliente' cliente.id %}">
   {% csrf_token %}
   <p>
     <label for="nome">Nome</label>
@@ -20,4 +20,5 @@
 </form>
 <p><a href="{% url 'index' %}">Voltar para proprietários</a></p>
 {% endblock %}
+
 

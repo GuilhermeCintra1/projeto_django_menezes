@@ -1,0 +1,19 @@
+{% extends "notes/base.html" %}
+{% block title %}Criar conta | Gestão de cavalos{% endblock %}
+{% block content %}
+<p class="voltar"><a href="{% url 'login' %}">← Voltar para o login</a></p>
+<div class="titulo-pagina"><div><p class="rotulo">Seu acesso ao cadastro</p><h1>Criar conta</h1><p class="descricao">Informe seus dados e escolha seu usuário e sua senha.</p></div></div>
+{% if erro %}<p class="alerta" role="alert">{{ erro }}</p>{% endif %}
+{{ form.non_field_errors }}
+<form class="formulario formulario-cadastro" method="post" action="{% url 'criar_conta' %}">
+  {% csrf_token %}
+  <p><label for="nome">Nome</label><input id="nome" name="nome" type="text" maxlength="150" autocomplete="given-name" value="{{ dados.nome }}" required /></p>
+  <p><label for="sobrenome">Sobrenome</label><input id="sobrenome" name="sobrenome" type="text" maxlength="150" autocomplete="family-name" value="{{ dados.sobrenome }}" required /></p>
+  <p><label for="telefone">Telefone</label><input id="telefone" name="telefone" type="tel" maxlength="30" autocomplete="tel" value="{{ dados.telefone }}" required /></p>
+  <p><label for="email">Email</label><input id="email" name="email" type="email" maxlength="254" autocomplete="email" value="{{ dados.email }}" required /></p>
+  <p class="campo-inteiro"><label for="id_username">Usuário</label>{{ form.username }}{{ form.username.errors }}</p>
+  <p><label for="id_password1">Senha</label>{{ form.password1 }}{{ form.password1.errors }}</p>
+  <p><label for="id_password2">Confirme a senha</label>{{ form.password2 }}{{ form.password2.errors }}</p>
+  <div class="campo-inteiro"><button type="submit">Criar conta</button></div>
+</form>
+{% endblock %}

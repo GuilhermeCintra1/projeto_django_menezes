@@ -1,19 +1,26 @@
 {% extends "notes/base.html" %}
 
 {% block content %}
-<h1>Proprietários</h1>
-<a href="{% url 'novo_cliente' %}">Cadastrar proprietário</a>
-<ul>
+<div class="titulo-pagina">
+  <div><p class="rotulo">Cadastro e organização</p><h1>Proprietários</h1><p class="descricao">Selecione um proprietário para ver e cadastrar seus cavalos.</p></div>
+  <a class="botao" href="{% url 'novo_cliente' %}">Cadastrar proprietário</a>
+</div>
+<ul class="lista-registros">
   {% for cliente in clientes %}
-  <li>
-    <a href="{% url 'cavalos_cliente' cliente.id %}">{{ cliente.nome }}</a>
-    - Telefone: {{ cliente.telefone }} - Email: {{ cliente.email }}
-    - <a href="{% url 'editar_cliente' cliente.id %}">Editar</a> -
-    <a href="{% url 'apagar_cliente' cliente.id %}">Apagar proprietário e seus cavalos</a>
+  <li class="registro">
+    <div class="registro-conteudo">
+      <span class="etiqueta">Proprietário</span>
+      <h2><a href="{% url 'cavalos_cliente' cliente.id %}">{{ cliente.nome }}</a></h2>
+      <div class="dados"><p><span>Telefone</span>{{ cliente.telefone }}</p><p><span>Email</span>{{ cliente.email }}</p></div>
+    </div>
+    <div class="acoes">
+      <a href="{% url 'cavalos_cliente' cliente.id %}">Ver cavalos</a><span>-</span>
+      <a href="{% url 'editar_cliente' cliente.id %}">Editar</a><span>-</span>
+      <a class="link-apagar" href="{% url 'apagar_cliente' cliente.id %}">Apagar proprietário e seus cavalos</a>
+    </div>
   </li>
   {% empty %}
-  <li>Nenhum proprietário cadastrado.</li>
+  <li class="vazio">Nenhum proprietário cadastrado. Comece pelo botão acima.</li>
   {% endfor %}
 </ul>
 {% endblock %}
-

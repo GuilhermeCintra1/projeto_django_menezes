@@ -1,0 +1,19 @@
+{% extends "notes/base.html" %}
+{% block title %}Entrar | Gestão de cavalos{% endblock %}
+{% block content %}
+<div class="entrada">
+  <div class="entrada-texto"><p class="rotulo">Tudo em seu lugar</p><h1>Seus cavalos.<br>Seu espaço.</h1><p>Entre para acompanhar os animais e manter os cadastros organizados.</p></div>
+  <section class="painel-login">
+    <p class="rotulo">Bem-vindo</p><h2>Entre na sua conta</h2>
+    {% if form.errors %}<p class="alerta" role="alert">Usuário ou senha incorretos. Por favor, tente novamente.</p>{% endif %}
+    <form class="formulario formulario-login" method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <p><label for="id_username">Usuário</label>{{ form.username }}</p>
+      <p><label for="id_password">Senha</label>{{ form.password }}</p>
+      <input type="submit" value="Entrar" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+    <p class="rodape-formulario">Ainda não tem uma conta? <a href="{% url 'criar_conta' %}">Criar conta</a></p>
+  </section>
+</div>
+{% endblock %}

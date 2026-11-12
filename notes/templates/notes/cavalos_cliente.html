@@ -1,18 +1,21 @@
 {% extends "notes/base.html" %}
 
 {% block content %}
-<h1>Cavalos de {{ cliente.nome }}</h1>
-<a href="{% url 'novo_cavalo' cliente.id %}">Cadastrar cavalo</a>
-<ul>
+<p class="voltar"><a href="{% url 'index' %}">← Voltar</a></p>
+<div class="titulo-pagina">
+  <div><p class="rotulo">Proprietário</p><h1>Cavalos de {{ cliente.nome }}</h1><p class="descricao">Animais vinculados a este proprietário.</p></div>
+  <a class="botao" href="{% url 'novo_cavalo' cliente.id %}">Cadastrar cavalo</a>
+</div>
+<ul class="lista-registros">
   {% for cavalo in cavalos %}
-  <li>
-    {{ cavalo.nome }} - Idade: {{ cavalo.idade }} - Pai: {{ cavalo.pai }} - Mãe: {{ cavalo.mae }}
-    - <a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a> -
-    <a href="{% url 'apagar_cavalo' cavalo.id %}">Apagar</a>
+  <li class="registro">
+    <div class="registro-conteudo"><span class="etiqueta">Cavalo</span><h2>{{ cavalo.nome }}</h2>
+      <div class="dados"><p><span>Idade</span>{{ cavalo.idade }} ano(s)</p><p><span>Pai</span>{{ cavalo.pai }}</p><p><span>Mãe</span>{{ cavalo.mae }}</p></div>
+    </div>
+    <div class="acoes"><a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a><span>-</span><a class="link-apagar" href="{% url 'apagar_cavalo' cavalo.id %}">Apagar</a></div>
   </li>
   {% empty %}
-  <li>Nenhum cavalo cadastrado para este proprietário.</li>
+  <li class="vazio">Nenhum cavalo cadastrado para este proprietário.</li>
   {% endfor %}
 </ul>
 {% endblock %}
-

@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Cadastrar cavalo</h1>
 <p>Proprietário: <strong>{{ cliente.nome }}</strong></p>
-<form method="post">
+<form class="formulario" method="post">
   {% csrf_token %}
   <p>
     <label for="nome">Nome do cavalo</label>
@@ -25,3 +25,4 @@
 </form>
 <p><a href="{% url 'cavalos_cliente' cliente.id %}">Voltar para cavalos de {{ cliente.nome }}</a></p>
 {% endblock %}
+

@@ -1,13 +1,41 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Proprietários e cavalos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Gestão de cavalos{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'notes/style/style.css' %}" />
   </head>
   <body>
-    <a href="{% url 'index' %}">Proprietários</a> -
-    <a href="{% url 'cavalos' %}">Cavalos</a>
-    {% block content %} {% endblock %}
+    <header class="cabecalho">
+      <div class="barra">
+        <a class="marca" href="{% url 'inicio' %}">
+          <span class="marca-simbolo" aria-hidden="true">C</span>
+          <span>Cavalos<span class="marca-legenda">Proprietários e seus animais</span></span>
+        </a>
+        {% if user.is_authenticated %}
+        <div class="conta">
+          <span><strong>{{ user.first_name }} {{ user.last_name }}</strong><small>{{ user.username }}</small></span>
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="botao-sair" type="submit">Sair</button>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+      {% if user.is_authenticated %}
+      <nav class="navegacao" aria-label="Menu principal">
+        {% if user.is_staff %}
+        <a href="{% url 'index' %}">Proprietários</a>
+        <span class="separador" aria-hidden="true">-</span>
+        {% endif %}
+        <a href="{% url 'cavalos' %}">{% if user.is_staff %}Cavalos{% else %}Meus cavalos{% endif %}</a>
+      </nav>
+      {% endif %}
+    </header>
+    <main class="conteudo">
+      {% block content %} {% endblock %}
+    </main>
   </body>
 </html>
-

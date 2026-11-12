@@ -1,23 +1,32 @@
 {% extends "notes/base.html" %}
 
 {% block content %}
-<h1>Cavalos</h1>
-<p>Para cadastrar um cavalo, escolha um proprietário na página de proprietários.</p>
-<ul>
+<div class="titulo-pagina">
+  <div>
+    <p class="rotulo">Os animais do cadastro</p>
+    <h1>{% if user.is_staff %}Cavalos{% else %}Meus cavalos{% endif %}</h1>
+    {% if user.is_staff %}<p class="descricao">Para cadastrar um animal, selecione seu proprietário.</p>{% else %}<p class="descricao">Consulte e atualize os dados dos seus cavalos.</p>{% endif %}
+  </div>
+  {% if user.is_staff %}
+  <a class="botao botao-secundario" href="{% url 'index' %}">Ver proprietários</a>
+  {% else %}
+  {% for cliente in clientes %}<a class="botao" href="{% url 'novo_cavalo' cliente.id %}">Cadastrar cavalo</a>{% endfor %}
+  {% endif %}
+</div>
+<ul class="lista-registros">
   {% for cavalo in cavalos %}
-  <li>
-    {{ cavalo.nome }} - Idade: {{ cavalo.idade }} - Pai: {{ cavalo.pai }} - Mãe: {{ cavalo.mae }}
-    {% if cavalo.proprietario %}
-    - Proprietário: {{ cavalo.proprietario.nome }}
-    {% else %}
-    - Escolha o proprietário em Editar.
-    {% endif %}
-    - <a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a> -
-    <a href="{% url 'apagar_cavalo' cavalo.id %}">Apagar</a>
+  <li class="registro">
+    <div class="registro-conteudo">
+      <span class="etiqueta">Cavalo</span><h2>{{ cavalo.nome }}</h2>
+      <div class="dados"><p><span>Idade</span>{{ cavalo.idade }} ano(s)</p><p><span>Pai</span>{{ cavalo.pai }}</p><p><span>Mãe</span>{{ cavalo.mae }}</p></div>
+      {% if user.is_staff %}
+      {% if cavalo.proprietario %}<p class="proprietario-animal">Proprietário: <a href="{% url 'cavalos_cliente' cavalo.proprietario_id %}">{{ cavalo.proprietario.nome }}</a></p>{% else %}<p class="proprietario-animal">Escolha o proprietário em Editar.</p>{% endif %}
+      {% endif %}
+    </div>
+    <div class="acoes"><a href="{% url 'editar_cavalo' cavalo.id %}">Editar</a><span>-</span><a class="link-apagar" href="{% url 'apagar_cavalo' cavalo.id %}">Apagar</a></div>
   </li>
   {% empty %}
-  <li>Nenhum cavalo cadastrado.</li>
+  <li class="vazio">Nenhum cavalo cadastrado.</li>
   {% endfor %}
 </ul>
 {% endblock %}
-

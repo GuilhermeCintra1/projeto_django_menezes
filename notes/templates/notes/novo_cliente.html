@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Cadastrar proprietário</h1>
-<form method="post">
+<form class="formulario" method="post">
   {% csrf_token %}
   <p>
     <label for="nome">Nome</label>
@@ -20,3 +20,4 @@
 </form>
 <p><a href="{% url 'index' %}">Voltar para proprietários</a></p>
 {% endblock %}
+
